@@ -1,0 +1,18 @@
+<head>
+	<title>test</title>
+</head>
+<body>
+	<div id="wrapper">
+		{{> elements}}
+		<div id="combine_area">
+		</div>
+	</div>
+</body>
+
+<template name="elements">
+	<div id="elements">
+		{{#each element}}
+			<div class="element" data-element-id="{{_id}}"><img src="{{name}}.png" alt="{{name}}"></div>
+		{{/each}}
+	</div>
+</template>

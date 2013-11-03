@@ -1,0 +1,61 @@
+*{
+	margin: 0;
+	padding: 0;
+}
+
+html{
+	min-height: 100%;
+	position: relative;
+}
+
+body, #wrapper{
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	width: 100%;
+	height: 100%; 
+}
+
+#elements{
+	width: 40%;
+	height: 100%;
+	float: left;
+	min-width: 250px;
+	background-color: #e74c3c;
+	text-align: center;
+}
+
+.element {
+	width: 150px;
+	height: 150px;
+	display: inline-block;
+	margin: 20px;
+	background-color: #ecf0f1;
+	border: 2px solid white;
+	border-radius: 4px;
+	box-shadow: 0 0 5px #555;
+}
+
+.element.ui-draggable-dragging{
+	border:10px solid black;
+	z-index: 1000;
+}
+
+.element img{
+	display: block;
+	max-width: 90%;
+	max-height: 90%;
+	margin: 5%;
+}
+
+#combine_area{
+	width: 60%;
+	height: 100%;
+	margin-left: 40%;
+	background-color: #ecf0f1;
+	box-shadow: inset 0 0 3px #555;
+}
+
+#combine_area .element{
+	position: absolute;
+}
