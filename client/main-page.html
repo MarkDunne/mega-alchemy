@@ -22,12 +22,32 @@
 			</div>
 		</div>
 	</div>
+
+	<div id="element_info_wrapper">	
+		<div>
+			<div class="element element_info" id="parent1">
+				<p></p>
+				<img src="">
+			</div>
+			<div class="element element_info" id="parent2">
+				<p></p>
+				<img src="">
+			</div>
+			<div class="element element_info" id="child">
+				<p></p>
+				<img src="">
+			</div>
+		</div>
+	</div>
 </body>
 
 <template name="elements">
 	<div id="elements">
 		{{#each element}}
-			<div class="element" data-element-id="{{_id}}"><img src="{{image}}" alt="{{name}}"></div>
+			<div class="element" data-element-id="{{_id}}">
+				<p>{{name}}</p>
+				<img src="{{image}}" alt="{{name}}">
+			</div>
 		{{/each}}
 	</div>
 </template>
