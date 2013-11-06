@@ -1,9 +1,45 @@
+Meteor.startup(function(){
+
+	$.each(['#f00', '#ff0', '#0f0', '#0ff', '#00f', '#f0f', '#000', '#fff'], function() {
+      $('#icon_creator #colors').append("<a href='#icon_canvas' data-color='" + this + "' style='display:inline-block; background: " + this + ";'></a> ");
+    });
+
+    $.each([10, 20, 30, 50], function() {
+      $('#icon_creator #sizes').append("<a href='#icon_canvas' class='btn' data-size='"+this+"'>"+this+"</a>");
+    });
+
+    canvas = $('#icon_canvas');
+    canvas.sketch();
+
+    $('#create_element').click(function(){
+    	element_name = $('#element_name').val();
+    	element_parents = $(this).data('parents');
+    	element_image = $('#icon_canvas')[0].toDataURL();
+    	Meteor.call("addElement", {name: element_name, parents: element_parents, image: element_image});
+    	
+    	$('#icon_canvas').sketch().clear();
+		$('#element_name').val("");
+    	$('#new_element_dialog_wrapper').removeClass('active');
+    })
+});
+
 new_element = function(parents){
-	console.log(parents);
+	parents = parents.sort();
+	if(!element_exists(parents)){
+		$('#create_element').data('parents', parents);
+		$('#new_element_dialog_wrapper').addClass('active');
+	}else{
+		element = Elements.find({parents:parents}).fetch()[0];
+		$.pnotify({
+		    title: 'Eelement already exists!',
+		    text: 'This element already exists as ' + element.name,
+		    type: 'error'
+		});
+	}
 }
 
 Template.elements.element = function(){
-	return Elements.find({});
+	return Elements.find({}, {sort: [["when", "desc"]]});
 }
 
 Template.elements.rendered = function () {
@@ -12,11 +48,11 @@ Template.elements.rendered = function () {
 
 	$('.element').draggable({
 		helper: 'clone',
+		cursor: 'move',
 	});
 
 	$('#combine_area').droppable({
 		drop: function(event, ui){
-			console.log('parent drop');
 			clone = ui.draggable
 			if(!clone.hasClass('cloned')){
 				clone = clone.clone();
@@ -30,7 +66,6 @@ Template.elements.rendered = function () {
 			clone.droppable({
 				greedy:true,
 				drop: function(event, ui){
-					console.log('clone drop');
 
 					if(ui.draggable.hasClass('cloned')){
 						ui.draggable.remove();
@@ -48,40 +83,3 @@ Template.elements.rendered = function () {
 		}
 	});
 }
-
-// {
-// 		greedy: true,
-// 		accept: '.element',
-// 		over: function(event, ui){
-// 			$(ui.helper).css('z-index', zCounter++);
-// 		},
-// 		drop: function(event, ui){
-// 			event.stopPropagation();
-// 			dropped_element = $(ui.helper)
-// 			if(!dropped_element.hasClass('cloned')){
-// 				dropped_element = dropped_element.clone();
-// 				dropped_element.addClass('cloned');
-// 			}
-// 			console.log(event);
-// 			dropped_element.draggable();
-// 			dropped_element.droppable({
-// 				greedy: true,
-// 				accept: '.element',
-// 				over: function(event, ui){
-// 					$(ui.helper).css('z-index', zCounter++);
-// 				},
-// 				drop: function(event, ui){
-// 					id1 = $(this).data("element-id");
-// 					id2 = $(ui.draggable).data("element-id");
-
-// 					if(ui.draggable.hasClass('cloned')){
-// 						ui.draggable.remove();
-// 					}
-// 					$(this).remove();
-
-// 					console.log(event);
-// 				}
-// 			});
-// 			dropped_element.appendTo($(this));
-// 		}
-// 	}
