@@ -19,15 +19,25 @@ Meteor.startup(function(){
     	element_image = $('#icon_canvas')[0].toDataURL();
     	Meteor.call("addElement", {name: element_name, parents: element_parents, image: element_image});
     	
-    	$('#icon_canvas').sketch().clear();
-		$('#element_name').val("");
-    	$('#new_element_dialog_wrapper').removeClass('active');
+    	dismiss_new_element_dialog();
     });
 
-    $('#element_info_wrapper').click(function(){
-    	$('#element_info_wrapper').removeClass('active');
+    $('#element_info_wrapper').click(function(evt){
+    	if(evt.target == this)
+    		$('#element_info_wrapper').removeClass('active');
+    });
+
+    $('#new_element_dialog_wrapper').click(function(evt){
+    	if(evt.target == this)
+    		dismiss_new_element_dialog();
     });
 });
+
+dismiss_new_element_dialog = function(){
+	$('#icon_canvas').sketch().clear();
+	$('#element_name').val("");
+	$('#new_element_dialog_wrapper').removeClass('active');
+}
 
 new_element = function(parents){
 	parents = parents.sort();

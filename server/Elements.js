@@ -13,9 +13,10 @@ Meteor.methods({
   	element.parents = element.parents.sort();
     element.when = new Date;
 
-    if(element.name == ""){
-    	element.name = "Unnamed"
+    if(element.name == "" || element_exists(element.parents)){
+    	return false;
+    }else{
+    	return Elements.insert(element);
     }
-    return Elements.insert(element);
   }
 });
