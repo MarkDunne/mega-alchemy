@@ -1,7 +1,7 @@
 mega-alchemy
 ============
 
-An MMO version of little alchemy written in Meteor/NodeJs
+An MMO version of little alchemy written in Meteor/Node.js
 
 Anyone create and use elements that are shared with everyone else playing
 
